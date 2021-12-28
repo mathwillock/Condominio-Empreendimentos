@@ -40,17 +40,10 @@ class PessoaGatewayImpl(
         )
     }
 
-    override fun findByCpf(cpf: Int): Any? {
-        val pessoa =  pessoaRepository.findByCpf(cpf)
-
-        val ok =  pessoa ?: pessoa?.let {
-            Pessoa(it.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+    override fun findByCpf(cpf: Int): Any? =
+        pessoaRepository.findByCpf(cpf)?.let {
+                pessoa -> Pessoa(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
         }
-
-        return ok
-
-    }
-
 
 }
 

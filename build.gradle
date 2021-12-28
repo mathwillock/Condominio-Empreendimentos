@@ -43,6 +43,10 @@ dependencies {
 
     runtimeOnly('com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1')
 
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
 }
 
 
@@ -62,6 +66,18 @@ tasks {
     compileTestKotlin {
         kotlinOptions {
             jvmTarget = "11"
+        }
+    }
+
+    kapt {
+        arguments {
+            arg("micronaut.processing.incremental", true)
+            arg("micronaut.processing.annotations", "com.mercadolibre.campaigndiscount.*")
+            arg("micronaut.processing.group", "com.mercadolibre")
+            arg("micronaut.processing.module", "campaign-discount")
+
+            arg("mapstruct.unmappedTargetPolicy", "ERROR")
+            arg("mapstruct.defaultComponentModel", "jsr330")
         }
     }
 }
