@@ -8,9 +8,15 @@ import jakarta.inject.Singleton
 class PessoaAllUseCase(
     private val pessoaGateway: PessoaGateway
 ): PessoaAll {
-    override fun process(idPessoa: Long): GetAllPessoa {
+    override fun process(idPessoa: Long): GetAllPessoa? {
         val pessoa = pessoaGateway.findById(idPessoa)
 
-        return GetAllPessoa(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+        if (pessoa != null ) {
+            return GetAllPessoa(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+        } else {
+            return null
+        }
+
+
     }
 }

@@ -10,19 +10,48 @@ import jakarta.inject.Singleton
 class PessoaGatewayImpl(
     private val pessoaRepository: PessoaRepository
 ): PessoaGateway {
-    override fun findById(id: Long): Pessoa {
-        val pessoa = pessoaRepository.findById(id).get()
-        return Pessoa(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+    override fun findById(id: Long): Pessoa? {
+        return try {
+            val pessoa = pessoaRepository.findById(id).get()
+            Pessoa(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+        } catch( e: NoSuchElementException )  {
+            null
+        }
+
     }
 
-    override fun save(pessoa: Pessoa) {
-        pessoaRepository.save(PessoaForm(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf))
+    override fun save(pessoa: Pessoa): PessoaForm? {
+
+        return pessoaRepository.save(
+            PessoaForm(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+        )
 
     }
 
     override fun delete(id: Long) {
-        val pessoa = pessoaRepository.findById(id).get()
-        pessoaRepository.delete(pessoa)
+        pessoaRepository.delete(
+            pessoaRepository.findById(id).get()
+        )
+    }
+
+    override fun update(pessoa: Pessoa) {
+        pessoaRepository.update(
+            PessoaForm(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+        )
+    }
+
+    override fun findByCpf(cpf: Int): Any? {
+        val pessoa =  pessoaRepository.findByCpf(cpf)
+
+        val ok =  pessoa ?: pessoa?.let {
+            Pessoa(it.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+        }
+
+        return ok
 
     }
+
+
 }
+
+

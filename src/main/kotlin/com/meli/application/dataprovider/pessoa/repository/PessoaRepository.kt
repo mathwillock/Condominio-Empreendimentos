@@ -5,4 +5,6 @@ import com.meli.application.dataprovider.pessoa.repository.entity.Pessoa as Pess
 import io.micronaut.data.jpa.repository.JpaRepository
 
 @Repository
-interface PessoaRepository: JpaRepository<PessoaForm, Long>
+interface PessoaRepository: JpaRepository<PessoaForm, Long> {
+    fun findByCpf(cpf: Int): PessoaForm?
+}
