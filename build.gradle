@@ -72,9 +72,9 @@ tasks {
     kapt {
         arguments {
             arg("micronaut.processing.incremental", true)
-            arg("micronaut.processing.annotations", "com.mercadolibre.campaigndiscount.*")
-            arg("micronaut.processing.group", "com.mercadolibre")
-            arg("micronaut.processing.module", "campaign-discount")
+            arg("micronaut.processing.annotations", "com.meli.*")
+            arg("micronaut.processing.group", "com.meli")
+            arg("micronaut.processing.module", "meli")
 
             arg("mapstruct.unmappedTargetPolicy", "ERROR")
             arg("mapstruct.defaultComponentModel", "jsr330")
