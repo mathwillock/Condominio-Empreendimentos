@@ -5,5 +5,5 @@ data class GetAllPessoa(
     val nome: String,
     val sobrenome: String,
     val carro: String?,
-    val cpf: Int
+    val cpf: Long
 )

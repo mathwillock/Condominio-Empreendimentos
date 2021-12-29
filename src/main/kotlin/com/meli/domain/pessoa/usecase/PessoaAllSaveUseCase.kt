@@ -13,7 +13,7 @@ class PessoaAllSaveUseCase(
         nomePessoa: String,
         sobrenomePessoa: String,
         carroPessoa: String?,
-        cpfPessoa: Int
+        cpfPessoa: Long
     ) {
         pessoaGateway.save(
             Pessoa(idPessoa, nomePessoa, sobrenomePessoa, carroPessoa, cpfPessoa)

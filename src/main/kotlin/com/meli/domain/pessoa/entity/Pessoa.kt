@@ -5,5 +5,5 @@ data class Pessoa(
     val nome: String,
     val sobrenome: String,
     val carro: String?,
-    val cpf: Int
+    val cpf: Long
 )

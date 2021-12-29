@@ -11,7 +11,6 @@ interface PessoaGateway {
 
     fun update(pessoa: Pessoa)
 
-    fun findByCpf(cpf: Int): Any?
-
+    fun findByCpf(cpf: Long): Any?
 
 }

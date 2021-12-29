@@ -7,7 +7,7 @@ import jakarta.inject.Singleton
 class PessoaAllGetCpfUseCase(
     private val pessoaGateway: PessoaGateway
 ): PessoaAllGetCpf {
-    override fun process(cpfPessoa: Int): Any? {
+    override fun process(cpfPessoa: Long): Any? {
         return pessoaGateway.findByCpf(cpfPessoa)
     }
 

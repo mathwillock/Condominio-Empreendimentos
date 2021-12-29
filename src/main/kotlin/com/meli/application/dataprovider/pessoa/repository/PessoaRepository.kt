@@ -6,5 +6,5 @@ import io.micronaut.data.jpa.repository.JpaRepository
 
 @Repository
 interface PessoaRepository: JpaRepository<PessoaForm, Long> {
-    fun findByCpf(cpf: Int): PessoaForm?
+    fun findByCpf(cpf: Long): PessoaForm?
 }

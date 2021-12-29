@@ -40,7 +40,7 @@ class PessoaGatewayImpl(
         )
     }
 
-    override fun findByCpf(cpf: Int): Any? =
+    override fun findByCpf(cpf: Long): Any? =
         pessoaRepository.findByCpf(cpf)?.let {
                 pessoa -> Pessoa(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
         }

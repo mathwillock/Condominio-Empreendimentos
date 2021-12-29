@@ -13,8 +13,10 @@ class PessoaAllUpdateUseCase(
         nomePessoa: String,
         sobrenomePessoa: String,
         carroPessoa: String?,
-        cpfPessoa: Int
+        cpfPessoa: Long
     ) {
-        pessoaGateway.update(Pessoa(idPessoa, nomePessoa, sobrenomePessoa, carroPessoa, cpfPessoa))
+        pessoaGateway.update(
+            Pessoa(idPessoa, nomePessoa, sobrenomePessoa, carroPessoa, cpfPessoa)
+        )
     }
 }
