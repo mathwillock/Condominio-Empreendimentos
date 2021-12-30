@@ -12,7 +12,7 @@ class PessoaEntryPoint(
     private val pessoaAllSave: PessoaAllSave,
     private val pessoaAllDelete: PesssoaAllDelete,
     private val pessoaAllUpdate: PessoaAllUpdate,
-    private val pessoaAllGetCpf: PessoaAllGetCpf
+    private val pessoaAllGetCpf: PessoaAllGetCpf,
 ) {
     @Get("{idPessoa}")
     fun getPessoa(@QueryValue idPessoa: Long): Any? {
@@ -23,7 +23,6 @@ class PessoaEntryPoint(
         )
         return ok
     }
-
 
     @Post("/salvar")
     fun savePessoa(@Body pessoa: PessoaForm): Any {
@@ -40,8 +39,6 @@ class PessoaEntryPoint(
                 "Nome:${pessoa.nome} CPF:${pessoa.cpf}, está salvo no relatório!"
             )
         }
-
-
 
     }
 
@@ -60,14 +57,12 @@ class PessoaEntryPoint(
         val getPessoa = pessoaAll.process(pessoa.id)
 
         if(getPessoa == null ) {
-            return "Check a o id!"
+            return "Cheque o id!"
         } else {
             HttpResponse.ok(
                 pessoaAllUpdate.process(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
             )
-
         }
-
         return "Id: ${pessoa.id} atualizado"
     }
 

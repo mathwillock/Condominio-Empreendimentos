@@ -9,7 +9,7 @@ interface PessoaGateway {
 
     fun delete(id: Long)
 
-    fun update(pessoa: Pessoa)
+    fun update(pessoa: Pessoa): Any
 
     fun findByCpf(cpf: Long): Any?
 
