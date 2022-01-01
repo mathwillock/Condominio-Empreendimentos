@@ -14,7 +14,7 @@ class PessoaEntryPoint(
     private val pessoaAllUpdate: PessoaAllUpdate,
     private val pessoaAllGetCpf: PessoaAllGetCpf,
 ) {
-    @Get("{idPessoa}")
+    @Get("/{idPessoa}")
     fun getPessoa(@QueryValue idPessoa: Long): Any? {
         val response = pessoaAll.process(idPessoa)
 
@@ -26,7 +26,6 @@ class PessoaEntryPoint(
 
     @Post("/salvar")
     fun savePessoa(@Body pessoa: PessoaForm): Any {
-
         val getCpf = pessoaAllGetCpf.process(pessoa.cpf)
 
         return if (getCpf != null ) {
@@ -39,16 +38,18 @@ class PessoaEntryPoint(
                 "Nome:${pessoa.nome} CPF:${pessoa.cpf}, está salvo no relatório!"
             )
         }
-
     }
 
     @Delete("/deletar/{idPessoa}")
-    fun deletePessoa(@QueryValue idPessoa: Long): String {
-
+    fun deletePessoa(@QueryValue idPessoa: Long) = try {
+        pessoaAllDelete.process(idPessoa)
+         HttpResponse.ok(
+             "O Id: $idPessoa, está excluído do relatório!"
+         )
+    } catch (e: NoSuchElementException) {
         HttpResponse.ok(
-            pessoaAllDelete.process(idPessoa)
+            "O Id: $idPessoa, não foi encontrado!"
         )
-        return "O Id: $idPessoa, está excluído do relatório!"
     }
 
     @Put("/atualizar")
@@ -65,10 +66,5 @@ class PessoaEntryPoint(
         }
         return "Id: ${pessoa.id} atualizado"
     }
-
-
-
-
-
 
 }
