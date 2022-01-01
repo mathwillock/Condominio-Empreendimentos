@@ -13,7 +13,14 @@ class PessoaEntryPoint(
     private val pessoaAllDelete: PesssoaAllDelete,
     private val pessoaAllUpdate: PessoaAllUpdate,
     private val pessoaAllGetCpf: PessoaAllGetCpf,
+    private val pessoaAllGet: PessoaAllGet
 ) {
+
+    @Get("/todos")
+    fun getPessoaAll() = HttpResponse.ok(
+        pessoaAllGet.process()
+    )
+
     @Get("/{idPessoa}")
     fun getPessoa(@QueryValue idPessoa: Long): Any? {
         val response = pessoaAll.process(idPessoa)
