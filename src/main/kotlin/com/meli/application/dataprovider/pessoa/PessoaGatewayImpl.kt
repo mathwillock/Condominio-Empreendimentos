@@ -30,6 +30,17 @@ class PessoaGatewayImpl(
         pessoaRepository.findById(id).get()
     )
 
+//    override fun delete(id: Long) = try {
+//        pessoaRepository.delete(
+//            pessoaRepository.findById(id).get()
+//        )
+//    } catch (e: NoSuchElementException) {
+//        null
+//    }
+
+
+
+
     override fun update(pessoa: Pessoa) = pessoaRepository.update(
         PessoaForm(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
     )

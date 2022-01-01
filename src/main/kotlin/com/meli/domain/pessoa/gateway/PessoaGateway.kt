@@ -7,7 +7,7 @@ interface PessoaGateway {
 
     fun save(pessoa: Pessoa): Any?
 
-    fun delete(id: Long)
+    fun delete(id: Long): Any?
 
     fun update(pessoa: Pessoa): Any
 
