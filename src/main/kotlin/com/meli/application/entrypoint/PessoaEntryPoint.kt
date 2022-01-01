@@ -54,7 +54,6 @@ class PessoaEntryPoint(
 
     @Put("/atualizar")
     fun updatePessoa(@Body pessoa: Pessoa): String {
-
         val getPessoa = pessoaAll.process(pessoa.id)
 
         if(getPessoa == null ) {
