@@ -6,19 +6,18 @@ import jakarta.inject.Singleton
 
 @Singleton
 class PessoaAllSaveUseCase(
-    private val pessoaGateway: PessoaGateway
+    private val pessoaGateway: PessoaGateway,
+    private val pessoaAllGetCpf: PessoaAllGetCpf
 ): PessoaAllSave {
-    override fun process(
-        idPessoa: Long,
-        nomePessoa: String,
-        sobrenomePessoa: String,
-        carroPessoa: String?,
-        cpfPessoa: Long
-    ) {
-        pessoaGateway.save(
-            Pessoa(idPessoa, nomePessoa, sobrenomePessoa, carroPessoa, cpfPessoa)
-        )
+    override fun process(pessoa: Pessoa) =
+        when(pessoaAllGetCpf.process(pessoa.cpf)) {
+        null -> pessoaGateway.save(pessoa)
+        else -> null
+
     }
+
+
+
 
 
 }

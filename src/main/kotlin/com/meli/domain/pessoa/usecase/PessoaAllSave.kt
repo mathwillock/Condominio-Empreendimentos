@@ -1,12 +1,10 @@
 package com.meli.domain.pessoa.usecase
 
+import com.meli.domain.pessoa.entity.Pessoa
+
 
 interface PessoaAllSave {
     fun process(
-        idPessoa: Long,
-        nomePessoa: String,
-        sobrenomePessoa: String,
-        carroPessoa: String?,
-        cpfPessoa: Long
-    )
+        pessoa: Pessoa
+    ): Any?
 }

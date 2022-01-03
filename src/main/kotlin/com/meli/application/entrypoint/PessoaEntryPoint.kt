@@ -1,76 +1,58 @@
 package com.meli.application.entrypoint
 
+import com.meli.application.dataprovider.pessoa.repository.entity.mapper.PessoaMappers
 import com.meli.domain.pessoa.entity.Pessoa
 import com.meli.domain.pessoa.usecase.*
 import com.meli.application.dataprovider.pessoa.repository.entity.Pessoa as PessoaForm
 import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus.*
 import io.micronaut.http.annotation.*
 
-@Controller("/pessoa")
+@Controller("/pessoas")
 class PessoaEntryPoint(
     private val pessoaAll: PessoaAll,
     private val pessoaAllSave: PessoaAllSave,
     private val pessoaAllDelete: PesssoaAllDelete,
     private val pessoaAllUpdate: PessoaAllUpdate,
-    private val pessoaAllGetCpf: PessoaAllGetCpf,
-    private val pessoaAllGet: PessoaAllGet
+    private val pessoaAllGet: PessoaAllGet,
+    private val pessoaMappers: PessoaMappers
 ) {
-
-    @Get("/todos")
-    fun getPessoaAll() = HttpResponse.ok(
-        pessoaAllGet.process()
-    )
+    @Get("/")
+    fun get() = HttpResponse.ok(pessoaAllGet.process())
 
     @Get("/{idPessoa}")
-    fun getPessoa(@QueryValue idPessoa: Long): Any? {
-        val response = pessoaAll.process(idPessoa)
+    fun getPessoaId(@QueryValue idPessoa: Long) = when(pessoaAll.process(idPessoa)) {
+        null -> HttpResponse.status(NOT_FOUND)
+        else -> HttpResponse.ok(pessoaAll.process(idPessoa))
+    }
 
-        val ok = HttpResponse.ok(
-            response ?: "Pessoa não encontrada!"
+    @Post("/")
+    fun save(@Body pessoa: PessoaForm) = when(pessoaAllSave.process(pessoaMappers.toDomain(pessoa))) {
+        null -> HttpResponse.status(CONFLICT)
+        else -> HttpResponse.created(
+            "Nome:${pessoa.nome} CPF:${pessoa.cpf}, está salvo no relatório!"
         )
-        return ok
     }
 
-    @Post("/salvar")
-    fun savePessoa(@Body pessoa: PessoaForm): Any {
-        val getCpf = pessoaAllGetCpf.process(pessoa.cpf)
-
-        return if (getCpf != null ) {
-            HttpResponse.ok(
-                "Pessoa já cadastrada"
-            )
-        } else {
-            pessoaAllSave.process(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
-            HttpResponse.created(
-                "Nome:${pessoa.nome} CPF:${pessoa.cpf}, está salvo no relatório!"
-            )
-        }
-    }
-
-    @Delete("/deletar/{idPessoa}")
-    fun deletePessoa(@QueryValue idPessoa: Long) = try {
+    @Delete("/{idPessoa}")
+    fun delete(@QueryValue idPessoa: Long) = try {
         pessoaAllDelete.process(idPessoa)
-         HttpResponse.ok(
-             "O Id: $idPessoa, está excluído do relatório!"
-         )
+         HttpResponse.status(NO_CONTENT)
     } catch (e: NoSuchElementException) {
-        HttpResponse.ok(
-            "O Id: $idPessoa, não foi encontrado!"
-        )
+        HttpResponse.notFound("")
     }
 
-    @Put("/atualizar")
-    fun updatePessoa(@Body pessoa: Pessoa): String {
-        val getPessoa = pessoaAll.process(pessoa.id)
-
-        if(getPessoa == null ) {
-            return "Cheque o id!"
-        } else {
+    @Put("/")
+    fun put(@Body pessoa: Pessoa) = when (pessoaAll.process(pessoa.id)) {
+        null -> HttpResponse.notFound("")
+        else -> {
             HttpResponse.ok(
-                pessoaAllUpdate.process(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+                pessoaAllUpdate.process(pessoa)
             )
         }
-        return "Id: ${pessoa.id} atualizado"
     }
+
+
+
 
 }
