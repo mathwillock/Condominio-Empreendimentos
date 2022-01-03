@@ -12,7 +12,7 @@ class PessoaAllUseCase(
         val pessoa = pessoaGateway.findById(idPessoa)
 
         if (pessoa != null ) {
-            return GetAllPessoa(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
+            return GetAllPessoa(pessoa)
         } else {
             return null
         }

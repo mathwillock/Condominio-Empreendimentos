@@ -1,9 +1,7 @@
 package com.meli.domain.entity
 
+import com.meli.domain.pessoa.entity.Pessoa
+
 data class GetAllPessoa(
-    val id: Long,
-    val nome: String,
-    val sobrenome: String,
-    val carro: String?,
-    val cpf: Long
+    val pessoa: Pessoa
 )

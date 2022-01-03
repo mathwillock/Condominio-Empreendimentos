@@ -20,28 +20,25 @@ class PessoaGatewayImpl(
         null
     }
 
-    override fun save(pessoa: Pessoa): PessoaForm? {
-        return  pessoaRepository.save(
-            PessoaForm(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
-        )
-    }
+    override fun save(pessoa: Pessoa) = pessoaRepository.save(
+        pessoaMappers.toApplication(pessoa)
+    )
 
     override fun delete(id: Long) = pessoaRepository.delete(
         pessoaRepository.findById(id).get()
     )
 
-    override fun update(pessoa: Pessoa) = pessoaRepository.update(
+    override fun update(pessoa: Pessoa): PessoaForm = pessoaRepository.update(
         PessoaForm(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
     )
 
-    override fun findByCpf(cpf: Long): Any? = pessoaRepository.findByCpf(cpf)?.let {
+    override fun findByCpf(cpf: Long) = pessoaRepository.findByCpf(cpf)?.let {
         pessoaMappers.toDomain(it)
     }
 
     override fun findAll(): ArrayList<com.meli.application.dataprovider.pessoa.repository.entity.Pessoa> {
-        val getAll = pessoaRepository.findAll()
         val pessoaAll = arrayListOf<PessoaForm>()
-        for (item in getAll){
+        for (item in pessoaRepository.findAll()){
             pessoaAll.add(item)
         }
 

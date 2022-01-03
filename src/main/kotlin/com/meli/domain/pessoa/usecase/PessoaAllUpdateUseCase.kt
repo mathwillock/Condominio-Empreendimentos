@@ -8,15 +8,7 @@ import jakarta.inject.Singleton
 class PessoaAllUpdateUseCase(
     private val pessoaGateway: PessoaGateway
 ): PessoaAllUpdate {
-    override fun process(
-        idPessoa: Long,
-        nomePessoa: String,
-        sobrenomePessoa: String,
-        carroPessoa: String?,
-        cpfPessoa: Long
-    ) {
-        pessoaGateway.update(
-            Pessoa(idPessoa, nomePessoa, sobrenomePessoa, carroPessoa, cpfPessoa)
-        )
-    }
+    override fun process(pessoa: Pessoa) = pessoaGateway.update(pessoa)
+
+
 }
