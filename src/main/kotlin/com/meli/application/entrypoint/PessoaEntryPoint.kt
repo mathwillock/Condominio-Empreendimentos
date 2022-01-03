@@ -31,7 +31,7 @@ class PessoaEntryPoint(
         return ok
     }
 
-    @Post("/save")
+    @Post("/")
     fun save(@Body pessoa: PessoaForm): Any {
         val getCpf = pessoaAllGetCpf.process(pessoa.cpf)
 
@@ -59,7 +59,7 @@ class PessoaEntryPoint(
         )
     }
 
-    @Put("/update")
+    @Put("/")
     fun put(@Body pessoa: Pessoa): String {
         val getPessoa = pessoaAll.process(pessoa.id)
 
