@@ -30,23 +30,22 @@ class PessoaGatewayImpl(
         pessoaRepository.findById(id).get()
     )
 
-//    override fun delete(id: Long) = try {
-//        pessoaRepository.delete(
-//            pessoaRepository.findById(id).get()
-//        )
-//    } catch (e: NoSuchElementException) {
-//        null
-//    }
-
-
-
-
     override fun update(pessoa: Pessoa) = pessoaRepository.update(
         PessoaForm(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
     )
 
     override fun findByCpf(cpf: Long): Any? = pessoaRepository.findByCpf(cpf)?.let {
         pessoaMappers.toDomain(it)
+    }
+
+    override fun findAll(): ArrayList<com.meli.application.dataprovider.pessoa.repository.entity.Pessoa> {
+        val getAll = pessoaRepository.findAll()
+        val pessoaAll = arrayListOf<PessoaForm>()
+        for (item in getAll){
+            pessoaAll.add(item)
+        }
+
+        return pessoaAll
     }
 
 }
