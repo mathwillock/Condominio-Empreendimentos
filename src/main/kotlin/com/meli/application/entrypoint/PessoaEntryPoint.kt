@@ -6,7 +6,7 @@ import com.meli.application.dataprovider.pessoa.repository.entity.Pessoa as Pess
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 
-@Controller("/pessoa")
+@Controller("/pessoas")
 class PessoaEntryPoint(
     private val pessoaAll: PessoaAll,
     private val pessoaAllSave: PessoaAllSave,
@@ -16,13 +16,13 @@ class PessoaEntryPoint(
     private val pessoaAllGet: PessoaAllGet
 ) {
 
-    @Get("/todos")
-    fun getPessoaAll() = HttpResponse.ok(
+    @Get("/")
+    fun get() = HttpResponse.ok(
         pessoaAllGet.process()
     )
 
     @Get("/{idPessoa}")
-    fun getPessoa(@QueryValue idPessoa: Long): Any? {
+    fun getPessoaId(@QueryValue idPessoa: Long): Any? {
         val response = pessoaAll.process(idPessoa)
 
         val ok = HttpResponse.ok(
@@ -31,8 +31,8 @@ class PessoaEntryPoint(
         return ok
     }
 
-    @Post("/salvar")
-    fun savePessoa(@Body pessoa: PessoaForm): Any {
+    @Post("/save")
+    fun save(@Body pessoa: PessoaForm): Any {
         val getCpf = pessoaAllGetCpf.process(pessoa.cpf)
 
         return if (getCpf != null ) {
@@ -47,8 +47,8 @@ class PessoaEntryPoint(
         }
     }
 
-    @Delete("/deletar/{idPessoa}")
-    fun deletePessoa(@QueryValue idPessoa: Long) = try {
+    @Delete("/{idPessoa}")
+    fun delete(@QueryValue idPessoa: Long) = try {
         pessoaAllDelete.process(idPessoa)
          HttpResponse.ok(
              "O Id: $idPessoa, está excluído do relatório!"
@@ -59,8 +59,8 @@ class PessoaEntryPoint(
         )
     }
 
-    @Put("/atualizar")
-    fun updatePessoa(@Body pessoa: Pessoa): String {
+    @Put("/update")
+    fun put(@Body pessoa: Pessoa): String {
         val getPessoa = pessoaAll.process(pessoa.id)
 
         if(getPessoa == null ) {
