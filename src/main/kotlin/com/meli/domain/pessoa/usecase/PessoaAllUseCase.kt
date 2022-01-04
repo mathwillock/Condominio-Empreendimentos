@@ -11,12 +11,7 @@ class PessoaAllUseCase(
     override fun process(idPessoa: Long): GetAllPessoa? {
         val pessoa = pessoaGateway.findById(idPessoa)
 
-        if (pessoa != null ) {
-            return GetAllPessoa(pessoa)
-        } else {
-            return null
-        }
-
+        return if (pessoa != null ) GetAllPessoa(pessoa) else null
 
     }
 }
