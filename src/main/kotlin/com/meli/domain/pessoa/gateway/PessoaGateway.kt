@@ -13,6 +13,6 @@ interface PessoaGateway {
 
     fun findByCpf(cpf: Long): Pessoa?
 
-    fun findAll(): ArrayList<com.meli.application.dataprovider.pessoa.repository.entity.Pessoa>
+    fun findAll(): ArrayList<Pessoa>
 
 }

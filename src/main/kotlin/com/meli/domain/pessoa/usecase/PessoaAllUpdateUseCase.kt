@@ -9,6 +9,4 @@ class PessoaAllUpdateUseCase(
     private val pessoaGateway: PessoaGateway
 ): PessoaAllUpdate {
     override fun process(pessoa: Pessoa) = pessoaGateway.update(pessoa)
-
-
 }

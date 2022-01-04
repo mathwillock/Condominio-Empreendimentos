@@ -1,6 +1,6 @@
 package com.meli.domain.pessoa.usecase
 
-import com.meli.application.dataprovider.pessoa.repository.entity.Pessoa
+import com.meli.domain.pessoa.entity.Pessoa
 import com.meli.domain.pessoa.gateway.PessoaGateway
 import javax.inject.Singleton
 

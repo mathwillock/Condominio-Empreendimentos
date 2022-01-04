@@ -36,12 +36,12 @@ class PessoaGatewayImpl(
         pessoaMappers.toDomain(it)
     }
 
-    override fun findAll(): ArrayList<com.meli.application.dataprovider.pessoa.repository.entity.Pessoa> {
-        val pessoaAll = arrayListOf<PessoaForm>()
+    override fun findAll(): ArrayList<Pessoa> {
+        val pessoaAll = arrayListOf<Pessoa>()
         for (item in pessoaRepository.findAll()){
-            pessoaAll.add(item)
+            pessoaAll.add(            pessoaMappers.toDomain(item)
+            )
         }
-
         return pessoaAll
     }
 
