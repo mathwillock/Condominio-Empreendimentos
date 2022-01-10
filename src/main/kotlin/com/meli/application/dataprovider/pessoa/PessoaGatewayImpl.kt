@@ -40,8 +40,7 @@ class PessoaGatewayImpl(
     override fun findAll(): ArrayList<Pessoa> {
         val pessoaAll = arrayListOf<Pessoa>()
         for (item in pessoaRepository.findAll()){
-            pessoaAll.add(            pessoaMappers.toDomain(item)
-            )
+            pessoaAll.add(pessoaMappers.toDomain(item))
         }
         return pessoaAll
     }

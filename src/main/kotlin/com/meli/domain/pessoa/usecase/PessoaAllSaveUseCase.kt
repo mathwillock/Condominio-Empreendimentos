@@ -9,11 +9,10 @@ class PessoaAllSaveUseCase(
     private val pessoaGateway: PessoaGateway,
     private val pessoaAllGetCpf: PessoaAllGetCpf
 ): PessoaAllSave {
-    override fun process(pessoa: Pessoa) =
+    override fun process(pessoa: Pessoa): Any? =
         when(pessoaAllGetCpf.process(pessoa.cpf)) {
-        null -> pessoaGateway.save(pessoa)
+        null ->  pessoaGateway.save(pessoa)
         else -> null
-
     }
 
 

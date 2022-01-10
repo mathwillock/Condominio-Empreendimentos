@@ -1,9 +1,7 @@
 package com.meli.application.entrypoint
 
-import com.meli.application.dataprovider.pessoa.repository.entity.mapper.PessoaMappers
 import com.meli.domain.pessoa.entity.Pessoa
 import com.meli.domain.pessoa.usecase.*
-import com.meli.application.dataprovider.pessoa.repository.entity.Pessoa as PessoaForm
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus.*
 import io.micronaut.http.annotation.*
@@ -15,7 +13,6 @@ class PessoaEntryPoint(
     private val pessoaAllDelete: PesssoaAllDelete,
     private val pessoaAllUpdate: PessoaAllUpdate,
     private val pessoaAllGet: PessoaAllGet,
-    private val pessoaMappers: PessoaMappers
 ) {
     @Get("/")
     fun get() = HttpResponse.ok(pessoaAllGet.process())
@@ -27,11 +24,10 @@ class PessoaEntryPoint(
     }
 
     @Post("/")
-    fun save(@Body pessoa: PessoaForm) = when(pessoaAllSave.process(pessoaMappers.toDomain(pessoa))) {
-        null -> HttpResponse.status(CONFLICT)
-        else -> HttpResponse.created(
-            "Nome:${pessoa.nome} CPF:${pessoa.cpf}, está salvo no relatório!"
-        )
+    fun save(@Body pessoa: Pessoa) = when(
+        val pessoaSaved = pessoaAllSave.process(pessoa)
+    ) { null -> HttpResponse.status(CONFLICT)
+        else -> HttpResponse.created(pessoaSaved)
     }
 
     @Delete("/{idPessoa}")
