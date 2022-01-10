@@ -6,9 +6,11 @@ import jakarta.inject.Singleton
 
 @Singleton
 class CarroAllSaveUseCase(
-    private val carroGateway: CarroGateway
+    private val carroGateway: CarroGateway,
+    private val carroAllGetPlaca: CarroAllGetPlaca
 ): CarroAllSave {
-    override fun process(carro: Carro): Any {
-        return carroGateway.save(carro)
+    override fun process(carro: Carro) = when(carroAllGetPlaca.process(carro.placa)) {
+        null -> carroGateway.save(carro)
+        else -> null
     }
 }

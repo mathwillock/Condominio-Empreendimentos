@@ -32,7 +32,8 @@ class PessoaGatewayImpl(
         PessoaForm(pessoa.id, pessoa.nome, pessoa.sobrenome, pessoa.carro, pessoa.cpf)
     )
 
-    override fun findByCpf(cpf: Long) = pessoaRepository.findByCpf(cpf)?.let {
+    override fun findByCpf(cpf: Long) = pessoaRepository
+    .findByCpf(cpf)?.let {
         pessoaMappers.toDomain(it)
     }
 
